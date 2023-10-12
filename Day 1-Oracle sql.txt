@@ -34,6 +34,12 @@ insert 6 members
 
 4. select all the people who have joined for only 3 months
 
+5. fetch name and bmi for all memebers
+
+6. show all the memebers in descending order of their height
+
+7. show birth year of memembers based on their age for city mumbai
+
 
 -----Creating Table-----
 create table gym_members(
@@ -82,4 +88,14 @@ Query 3 :
 
 Query 4 : 
           select * from gym_members where months_between(joining_dte, expiration_dte) = 2;
+
+Query 5 :
+          select name, (weight*10000)/(height*height) as bmi from gym_members;
+
+Query 6 : 
+           select * from gym_members order by height desc;
+
+Query 7:
+          select name,age, Extract(Year from sysdate)-age as Birth_Year from Gym_members where city='Mumbai'; 
+
 
