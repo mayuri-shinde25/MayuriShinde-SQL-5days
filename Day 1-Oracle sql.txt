@@ -1,0 +1,101 @@
+
+Create a table called as gym_members with proper constraints
+
+ 
+
+id
+
+name
+
+age
+
+joining_date
+
+expiration_date
+
+cost
+
+city
+
+height
+
+weight
+
+created_at
+
+ 
+insert 6 members 
+
+1. select all people whos cost is geater than 20000
+
+2. select all the people who live in mumbai
+
+3. select all the people who live in mumbai and have age >24
+
+4. select all the people who have joined for only 3 months
+
+5. fetch name and bmi for all memebers
+
+6. show all the memebers in descending order of their height
+
+7. show birth year of members based on their age for city mumbai
+
+
+
+-----Creating Table-----
+create table gym_members(
+	id number(5) primary key,
+	name varchar2(20) not null,
+        age number(3) not null check(age>0),
+        joining_dte date not null,
+        expiration_dte date not null,
+        cost number(6) not null check(cost>0),
+	city varchar2(30) default 'Pune' not null,
+        height number(3)not null,
+        weight number(2)not null,
+	created_at date default sysdate
+);
+
+
+-----Creating Sequence-----
+create sequence gym_sequence
+start with 1
+increment by 1;
+
+
+-----Inserting Values into Table-----
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Mayuri', 22, '01-Aug-2023', '01-Jan-2024', 30000, 'Kolhapur', 150, 52);
+
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Jiya', 27, '01-Oct-2023', '01-Dec-2023', 22000, 'Nagpur', 160, 58);
+
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Jim', 27, '01-July-2023', '01-Aug-2023', 15000, 'Mumbai', 165, 63);
+
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Albert', 26,'01-Sept-2023',' 01-Nov-2023', 19000, 'Nanded', 167, 59);
+
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Neha', 24, '01-Nov-2023', '01-Dec-2023', 20000, 'Mumbai', 146, 49);
+
+insert into gym_members(id, name, age, joining_dte, expiration_dte, cost, city, height, weight) values(gym_sequence.nextval, 'Mahi', 23, '01-Aug-2023', '01-Sept-2023', 18000, 'Mumbai', 149, 54);
+
+
+
+Query 1 : 
+          select * from gym_members where cost>20000;
+
+Query 2 : 
+          select * from gym_members where city = 'Mumbai';
+
+Query 3 : 
+          select * from gym_members where city = 'Mumbai' and age>24;
+
+Query 4 : 
+          select * from gym_members where months_between(joining_dte, expiration_dte) = 2;
+
+Query 5 :
+          select name, (weight*10000)/(height*height) as bmi from gym_members;
+
+Query 6: 
+          select * from gym_members order by height desc;
+
+Query 7:
+          select name,age, Extract(Year from sysdate)-age as Birth_Year from Gym_members where city='Mumbai'; 
+
